@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const uuid = require('uuid');
 let users = require('../users');
+const util= require('../utils/auths')
 
+const jwt = require('jsonwebtoken');
+router.get('',util,(req,res)=>{
+   jwt.verify(req.token,'secretKey',(err,authData)=>{
+    if (err){
+        res.sendStatus(403);
+    }
+    else{
+        res.json(users);
+    }
 
-router.get('',(req,res)=>{
-    res.json(users);
+   })
+    
 });
 
 router.get('/:id',(req,res)=>{
